@@ -54,6 +54,11 @@ class Tree
     end
     root
   end
+
+  def min_value(curr_node)
+    curr_node = curr_node.left until curr_node.left.nil?
+    curr_node
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
