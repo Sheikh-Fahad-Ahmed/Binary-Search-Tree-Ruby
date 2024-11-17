@@ -24,9 +24,36 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def insert(value, root = @root)
+    new_node = Node.new(value)
+    temp = root
+    loop do
+      return 'Duplicate value' if new_node.value == temp.value
+
+      if new_node.value < temp.value
+        if temp.left.nil?
+          temp.left = new_node
+          return true
+        end
+        temp = temp.left
+      else
+        if temp.right.nil?
+          temp.right = new_node
+          return true
+        end
+        temp = temp.right
+      end
+    end
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
+
+
+test.insert(10)
+
+test.pretty_print
