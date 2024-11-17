@@ -26,25 +26,16 @@ class Tree
   end
 
   def insert(value, root = @root)
-    new_node = Node.new(value)
-    temp = root
-    loop do
-      return 'Duplicate value' if new_node.value == temp.value
+    return Node.new(value) if root.nil?
 
-      if new_node.value < temp.value
-        if temp.left.nil?
-          temp.left = new_node
-          return true
-        end
-        temp = temp.left
-      else
-        if temp.right.nil?
-          temp.right = new_node
-          return true
-        end
-        temp = temp.right
-      end
+    return root if root.value == value
+
+    if value < root.value
+      root.left = insert(value, root.left)
+    else
+      root.right = insert(value, root.right)
     end
+    root
   end
 end
 
