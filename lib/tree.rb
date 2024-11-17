@@ -37,6 +37,23 @@ class Tree
     end
     root
   end
+
+  def delete(value, root = @root)
+    return nil if root.nil?
+
+    if value < root.value
+      root.left = delete(value, root.left)
+    elsif value > root.value
+      root.right = delete(value, root.right)
+    elsif root.left.nil? && root.right.nil?
+      return nil
+    elsif root.left.nil?
+      root = root.right
+    elsif root.right.nil?
+      root = root.left
+    end
+    root
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -46,5 +63,10 @@ test.pretty_print
 
 
 test.insert(10)
+test.pretty_print
 
+
+test.delete(3)
+test.delete(10)
+test.delete(1)
 test.pretty_print
