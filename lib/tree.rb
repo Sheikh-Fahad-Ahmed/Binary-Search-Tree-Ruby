@@ -51,6 +51,10 @@ class Tree
       root = root.right
     elsif root.right.nil?
       root = root.left
+    else
+      sub_tree_min = min_value(root.right)
+      root.value = sub_tree_min.value
+      root.right = delete(sub_tree_min.value, root.right)
     end
     root
   end
@@ -65,13 +69,8 @@ test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
-
-
-test.insert(10)
+test.insert(0)
+test.insert(2)
 test.pretty_print
-
-
-test.delete(3)
-test.delete(10)
 test.delete(1)
 test.pretty_print
