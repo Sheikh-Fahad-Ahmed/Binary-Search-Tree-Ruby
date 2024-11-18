@@ -122,6 +122,15 @@ class Tree
     arr.push(root.value)
     arr
   end
+
+  def max_depth(node = @root)
+    return 0 if node.nil?
+
+    left_depth = max_depth(node.left)
+    right_depth = max_depth(node.right)
+
+    [left_depth, right_depth].max + 1
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -131,3 +140,6 @@ test.pretty_print
 print test.preorder
 print test.inorder
 print test.postorder
+
+
+puts test.max_depth
