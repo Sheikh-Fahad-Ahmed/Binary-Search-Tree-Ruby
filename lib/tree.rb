@@ -75,10 +75,27 @@ class Tree
       root
     end
   end
+
+  def level_order
+    return nil if root.nil?
+
+    queue = []
+    result = []
+    queue.prepend(root)
+    until queue.empty?
+      curr_node = queue[-1]
+      curr_node.value = yield curr_node.value if block_given?
+      result.push(curr_node.value)
+      queue.prepend(curr_node.left) unless curr_node.left.nil?
+      queue.prepend(curr_node.right) unless curr_node.right.nil?
+      queue.pop
+    end
+    result
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
-p test.find(5)
+print test.level_order
