@@ -63,14 +63,22 @@ class Tree
     curr_node = curr_node.left until curr_node.left.nil?
     curr_node
   end
+
+  def find(value, root = @root)
+    return nil if root.nil?
+
+    if value < root.value
+      root.left = find(value, root.left)
+    elsif value > root.value
+      root.right = find(value, root.right)
+    else
+      root
+    end
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
-test.insert(0)
-test.insert(2)
-test.pretty_print
-test.delete(1)
-test.pretty_print
+p test.find(5)
