@@ -92,10 +92,42 @@ class Tree
     end
     result
   end
+
+  def preorder(root = @root, arr = [])
+    return nil if root.nil?
+
+    yield root.value if block_given?
+    arr.push(root.value)
+    preorder(root.left, arr)
+    preorder(root.right, arr)
+    arr
+  end
+
+  def inorder(root = @root, arr = [])
+    return nil if root.nil?
+
+    inorder(root.left, arr)
+    yield root.value if block_given?
+    arr.push(root.value)
+    inorder(root.right, arr)
+    arr
+  end
+
+  def postorder(root =  @root, arr = [])
+    return nil if root.nil?
+
+    postorder(root.left, arr)
+    postorder(root.right, arr)
+    yield root.value if block_given?
+    arr.push(root.value)
+    arr
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
-print test.level_order
+print test.preorder
+print test.inorder
+print test.postorder
