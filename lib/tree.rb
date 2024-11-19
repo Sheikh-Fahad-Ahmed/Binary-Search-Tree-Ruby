@@ -64,15 +64,15 @@ class Tree
     curr_node
   end
 
-  def find(value, root = @root)
-    return nil if root.nil?
+  def find(value, curr_node = @root)
+    return nil if curr_node.nil?
 
-    if value < root.value
-      root.left = find(value, root.left)
-    elsif value > root.value
-      root.right = find(value, root.right)
+    if value < curr_node.value
+      curr_node = find(value, curr_node.left)
+    elsif value > curr_node.value
+      curr_node = find(value, curr_node.right)
     else
-      root
+      curr_node
     end
   end
 
@@ -131,15 +131,29 @@ class Tree
 
     [left_depth, right_depth].max + 1
   end
+
+  def depth_of_node(node)
+    curr_node = @root
+    depth = 0
+    until curr_node.value == node.value || curr_node.nil?
+      curr_node = curr_node.value > node.value ? curr_node.left : curr_node.right
+      depth += 1
+    end
+    return depth unless curr_node.nil?
+
+    nil
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
-print test.preorder
-print test.inorder
-print test.postorder
+
+node = test.find(5)
 
 
-puts test.max_depth
+print test.depth_of_node(node)
+
+
+
