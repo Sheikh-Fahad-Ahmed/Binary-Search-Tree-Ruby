@@ -123,11 +123,11 @@ class Tree
     arr
   end
 
-  def max_depth(node = @root)
+  def height(node = @root)
     return 0 if node.nil?
 
-    left_depth = max_depth(node.left)
-    right_depth = max_depth(node.right)
+    left_depth = height(node.left)
+    right_depth = height(node.right)
 
     [left_depth, right_depth].max + 1
   end
@@ -143,17 +143,32 @@ class Tree
 
     nil
   end
+
+  def balnaced?(node = @root)
+    return true if node.nil?
+
+    left_height = height(node.left)
+    right_height = height(node.right)
+
+    return false if (left_height - right_height).abs > 1
+
+    balnaced?(node.left) && balnaced?(node.right)
+  end
+
+  def rebalance
+    @root = build_tree(preorder)
+  end
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 test.pretty_print
 
+puts test.balnaced?
+test.insert(2)
+test.pretty_print
 
-node = test.find(5)
+puts test.balnaced?
 
-
-print test.depth_of_node(node)
-
-
-
+test.rebalance
+test.pretty_print
