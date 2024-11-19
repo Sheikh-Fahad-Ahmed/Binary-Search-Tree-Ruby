@@ -144,7 +144,7 @@ class Tree
     nil
   end
 
-  def balnaced?(node = @root)
+  def balanced?(node = @root)
     return true if node.nil?
 
     left_height = height(node.left)
@@ -152,23 +152,10 @@ class Tree
 
     return false if (left_height - right_height).abs > 1
 
-    balnaced?(node.left) && balnaced?(node.right)
+    balanced?(node.left) && balanced?(node.right)
   end
 
   def rebalance
     @root = build_tree(preorder)
   end
 end
-
-test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-
-test.pretty_print
-
-puts test.balnaced?
-test.insert(2)
-test.pretty_print
-
-puts test.balnaced?
-
-test.rebalance
-test.pretty_print
